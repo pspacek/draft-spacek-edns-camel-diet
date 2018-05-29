@@ -5,7 +5,7 @@
 <?rfc sortrefs="yes"?>
 <?rfc symrefs="yes"?>
 <?rfc compact="yes"?>
-<rfc category="std" docName="draft-spacek-edns-camel-diet-00"
+<rfc category="std" docName="draft-spacek-edns-camel-diet-01"
      ipr="trust200902">
   <front>
     <title abbrev="Minimal EDNS compliance">Minimal EDNS compliance requirements</title>
@@ -35,20 +35,21 @@
       </address>
     </author>
 
-    <date day="19" month="March" year="2018"/>
+    <date day="29" month="May" year="2018"/>
 
     <area>Internet</area>
 
     <abstract>
-	    <t>DNS responders must either follow RFC 6891 by implementing EDNS or respond with RCODE=FORMERR to queries containing OPT record.
-		    Non-compliant implementations are not worth talking to.</t>
+	    <t>DNS responders must either follow RFC 6891 by fully implementing EDNS or at least respond to queries containing OPT record according to older specifications.
+		    Non-compliant implementations which do not respond at all are not worth talking to.</t>
     </abstract>
   </front>
 
   <middle>
     <section anchor="intro" title="Introduction">
     <t>
-	    EDNS version 0 was standardized in 1999, but non-RFC 1035 compliant implementations still exist and cause lot of extra queries and complicated logic in recursive resolvers. RFC 6891 clearly states that FORMERR is the only acceptable answer for implementations without support for EDNS. The cost of supporting these non-compliant implementations keeps increasing.
+	    Neither the original DNS standard RFC 1035 nor its extensions RFC 2671 and RFC 6891 allow not to respond to a DNS query.
+	    Many years later non-compliant implementations which drop queries still exist and cause lot of extra queries, latency, and complicated logic in recursive resolvers. The cost of supporting these non-compliant implementations keeps increasing.
     </t>
       <section title="Terminology">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -58,7 +59,7 @@
     </section>
 
     <section title="The Protocol">
-	    <t>No DNS response message to a repeated DNS query containing EDNS extension means that the other side is not a DNS responder and the querier MUST NOT retry its query without EDNS.</t>
+	    <t>No DNS response message to a repeated DNS query containing EDNS extension implies that the other side is not a DNS responder. The querier MUST NOT retry its query without EDNS.</t>
     </section>
 
     <section title="Security Considerations">
